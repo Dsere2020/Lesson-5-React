@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState }  from "react";
+import Validation from "./Validation";
 
-function App() {
-  return (
+
+
+function App(){
+  const [users,setUsers] = useState([]);
+  const deleteUser = (id) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => id !== user.id));
+  }
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Validation setUsers={setUsers}/>
+    {users.map((user) => {
+      return (
+        <div key={user.id}>
+          <h1>{user.name} {user.surName} {user.age} {user.email} {user.gender}</h1>
+          <button onClick={() => deleteUser(user.id)}>Delete</button>
+        </div>
+      )
+    })}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
